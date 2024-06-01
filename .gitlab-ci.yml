@@ -1,0 +1,39 @@
+image: node:18.14.0
+
+stages:
+  ['build', 'test', 'deploy']
+
+cache:
+  - &global_cache_node_mods
+    key:
+        files:
+            - package-lock.json
+    paths:
+        - node_modules/
+    policy: pull
+
+install_dependencies:
+  stage: build
+  script:
+    - npm install
+    - echo "Building the project"
+  cache:
+    - <<: *global_cache_node_mods
+      when: on_success
+      policy: pull-push
+
+run_tests:
+  stage: test
+  needs:
+    ['install_dependencies']
+  script:
+    - npm test
+    - echo "Testing the project"
+
+deploy_app:
+  stage: deploy
+  needs:
+    ['install_dependencies', 'run_tests']
+  script:
+    - echo "Deploying the application"
+    - echo "Depends on the deployment method"

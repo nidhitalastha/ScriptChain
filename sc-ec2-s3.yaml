@@ -1,0 +1,15 @@
+Resources:
+  ScriptChainEC2:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: ap-south-1a
+      ImageId: ami-0f58b397bc5c1f2e8
+      InstanceType: t2.micro
+  ScriptChainS3:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
